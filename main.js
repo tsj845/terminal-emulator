@@ -15,22 +15,15 @@ const createWindow = () => {
 };
 
 async function handleTermExec (event, command) {
-    // console.log(command);
     return new Promise((resolve, reject)=>{
         let res = exec(command, (e, o, r) => {
             if (e) {
-                // console.log(typeof e, e, r);
-                // resolve(e);
                 resolve(r);
             }
             resolve(o);
         });
     });
-    let res = exec(command);
-    return res.stdout.setEncoding("utf-8").read();
 }
-
-// handleTermExec({}, "ls").then((x)=>{console.log(x);});
 
 app.whenReady().then(() => {
     ipcMain.handle("terminal:execute", handleTermExec);
