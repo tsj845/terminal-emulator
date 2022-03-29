@@ -1,0 +1,13 @@
+body {
+    background : black;
+}
+
+* {
+    background : black;
+    color : white;
+}
+
+input[type="text"]#input {
+    border : none;
+    outline : none;
+}

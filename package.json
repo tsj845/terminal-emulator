@@ -1,0 +1,26 @@
+{
+  "name": "terminal-emulator",
+  "version": "1.0.0",
+  "description": "custom terminal emulator",
+  "main": "main.js",
+  "scripts": {
+    "test": "run",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsj845/terminal-emulator.git"
+  },
+  "keywords": [
+    "terminal"
+  ],
+  "author": "tristan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tsj845/terminal-emulator/issues"
+  },
+  "homepage": "https://github.com/tsj845/terminal-emulator#readme",
+  "devDependencies": {
+    "electron": "^17.2.0"
+  }
+}
