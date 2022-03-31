@@ -1,13 +1,57 @@
 body {
     background : black;
+    overflow : hidden;
 }
 
 * {
     background : black;
     color : white;
+    font-family : "SourceSans", monospace;
 }
 
-input[type="text"]#input {
+input {
     border : none;
     outline : none;
+}
+
+div#output {
+    position : absolute;
+    --xl : 2.5vw;
+    --yl : 2.5vh;
+    --xh : 2.5vw;
+    --yh : 2.5vh;
+    left : var(--xl, 0vw);
+    top : var(--yl, 0vh);
+    width : calc(100vw - var(--xl, 0vw) - var(--xh, 0vw));
+    height : calc(90vh - var(--yl, 0vh) - var(--yh, 0vh));
+    line-height : 0px;
+}
+
+pre#keydisp {
+    position : absolute;
+    left : 0px;
+    top : 90vh;
+    width : 50vw;
+    height : 10vh;
+}
+
+pre#posdisp {
+    position : absolute;
+    left : 50vw;
+    top : 90vh;
+    width : 50vw;
+    height : 10vh;
+    text-align : right;
+}
+
+/* pre#cursor {
+    position : absolute;
+    left : calc(var(--x, 0) * 0.5em);
+    top : calc(var(--y, 0) * 1cap);
+    background : white;
+} */
+
+.cursor {
+    background : white;
+    color : black;
 }

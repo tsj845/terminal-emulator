@@ -15,8 +15,9 @@ const createWindow = () => {
 };
 
 async function handleTermExec (event, command) {
+    console.log(command);
     return new Promise((resolve, reject)=>{
-        let res = exec(command, (e, o, r) => {
+        exec(command, (e, o, r) => {
             if (e) {
                 resolve(r);
             }
@@ -27,6 +28,7 @@ async function handleTermExec (event, command) {
 
 app.whenReady().then(() => {
     ipcMain.handle("terminal:execute", handleTermExec);
+    ipcMain.on("console:log", (_, a) => {console.log(...a)});
     createWindow();
 
     app.on("activate", () => {
