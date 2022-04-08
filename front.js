@@ -1,19 +1,39 @@
+/**
+ * console logging
+ * @param  {...any} args - what to log
+ */
+ const mlog = (...args) => {
+    window.electronAPI.mlog(args);
+}
+
+/**
+ * console errors
+ * @param {...any} args - what to log
+ */
+const merr = (...args) => {
+    window.electronAPI.merr(args);
+}
+
 /**@type {HTMLDivElement} */
 const output = document.getElementById("output");
-// /**@type {HTMLSpanElement} */
-// const cursor_span = document.getElementById("cursor");
 /**@type {HTMLPreElement} */
 const keydisp = document.getElementById("keydisp");
 /**@type {HTMLPreElement} */
 const posdisp = document.getElementById("posdisp");
 
-/**
- * console logging
- * @param  {...any} args - what to log
- */
-const mlog = (...args) => {
-    window.electronAPI.mlog(args);
+/**@type {Boolean} */
+let block_input = false;
+
+document.getElementById("error").children[1].addEventListener("click", () => {
+    window.electronAPI.kill();
+});
+
+function show_err () {
+    block_input = true;
+    document.getElementById("error").showModal();
 }
+
+// merr("stuff");
 
 /**@type {String} */
 let input = "";
@@ -60,7 +80,8 @@ function update_cursor () {
     // cursor_span.style.setProperty("--x", cursor.x);
     // cursor_span.style.setProperty("--y", cursor._y);
     if (output.children.length <= cursor.y) {
-        mlog("not enough lines");
+        merr("not enough lines");
+        show_err();
         return;
     }
     /**@type {HTMLPreElement} */
@@ -74,7 +95,8 @@ function update_cursor () {
     c += " ";
     // mlog(c);
     if (c.length < cursor.x) {
-        mlog("not enough chars", c, c.length, cursor.x);
+        merr("not enough chars", c, c.length, cursor.x);
+        show_err();
         return;
     }
     target.replaceChildren();
@@ -183,7 +205,7 @@ function do_output (s) {
         output_line(s[i]);
     }
     display_lines();
-    
+
 }
 
 async function execute () {
@@ -209,6 +231,9 @@ function addin (c) {
 
 function handleKey (e) {
     const key = e.code.toString();
+    if (block_input) {
+        return;
+    }
     if (key === "ShiftLeft" || key === "ShiftRight") {
         shift = true;
     } else if (key == "MetaLeft" || key === "MetaRight") {
@@ -326,6 +351,9 @@ function handleKey (e) {
 document.addEventListener("keydown", handleKey);
 
 document.addEventListener("keyup", (e) => {
+    if (block_input) {
+        return;
+    }
     const key = e.code.toString();
     if (key === "ShiftLeft" || key === "ShiftRight") {
         shift = false;
